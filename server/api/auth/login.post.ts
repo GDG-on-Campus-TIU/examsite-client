@@ -1,8 +1,5 @@
 type Body = {
-  name: string;
   email: string;
-  dept: string;
-  section: string;
   password: string;
 };
 
@@ -23,35 +20,31 @@ type Loginuser = {
   token: string;
 };
 
+export type AttendeeType = {
+  name: string;
+  email: string;
+  password: string;
+  attempts: number;
+  dept: string;
+  section: string;
+};
+
 export default defineEventHandler(async (event) => {
   const body = await readBody<Body>(event);
 
-  try {
-    const registerUser = await $fetch<UserDetails>(
-      "http://localhost:8998/api/v1/admin/create-user?a_email=aritra@gdgoctiu.com&a_pass=RJiQ$jwzeOQrR$z9",
-      {
-        method: "POST",
-        body: {
-          name: body.name,
-          email: body.email,
-          dept: body.dept,
-          section: body.section,
-        },
-      }
-    );
+  console.log(body);
 
+  try {
     const login = await $fetch<Loginuser>(
       "http://localhost:8998/api/v1/users/login",
       {
         method: "POST",
         body: {
-          email: registerUser.user.email,
-          password: registerUser.user.password,
+          email: body.email,
+          password: body.password,
         },
       }
     );
-
-    console.log(login);
 
     return {
       token: login.token,

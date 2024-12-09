@@ -12,17 +12,6 @@
 
       <CardContent>
         <form @submit.prevent="handleSubmit" class="space-y-4">
-          <!-- Name Field -->
-          <div>
-            <Label for="name">Name</Label>
-            <Input
-              id="name"
-              type="text"
-              v-model="form.name"
-              placeholder="Enter your name"
-            />
-          </div>
-
           <!-- Email Field -->
           <div>
             <Label for="email">Email</Label>
@@ -36,30 +25,19 @@
 
           <!-- Department Field -->
           <div>
-            <Label for="department">Department</Label>
+            <Label for="department">Password</Label>
             <Input
               id="department"
-              type="text"
-              v-model="form.department"
+              type="password"
+              v-model="form.password"
               placeholder="Enter your department"
-            />
-          </div>
-
-          <!-- Section Field -->
-          <div>
-            <Label for="section">Section</Label>
-            <Input
-              id="section"
-              type="text"
-              v-model="form.section"
-              placeholder="Enter your section"
             />
           </div>
         </form>
       </CardContent>
 
       <CardFooter class="flex justify-end">
-        <Button @click="registerUser">Login</Button>
+        <Button @click="login">Login</Button>
       </CardFooter>
     </Card>
   </div>
@@ -69,28 +47,26 @@
 import { userStore } from "~/store/user";
 const store = userStore();
 
-// Form data
-const form = ref({
-  name: "",
-  email: "",
-  department: "",
-  section: "",
+definePageMeta({
+  layout: "login",
 });
 
-const registerUser = async () => {
-  form.value.name.trim();
-  form.value.email.trim();
-  form.value.department.trim();
-  form.value.section.trim();
+// Form data
+const form = ref({
+  email: "",
+  password: "",
+});
 
-  let register = await $fetch("/api/auth/register", {
+const login = async () => {
+  form.value.email.trim();
+  form.value.password.trim();
+
+  let register = await $fetch("/api/auth/login  ", {
     method: "POST",
 
     body: {
-      name: form.value.name,
       email: form.value.email,
-      dept: form.value.department,
-      section: form.value.section,
+      password: form.value.password,
     },
   });
 
@@ -102,7 +78,13 @@ const registerUser = async () => {
   nameCookie.value = register.name;
   emailCookie.value = register.email;
 
-  store.login(register.token, form.value.name, form.value.email);
+  console.log(register);
+
+  store.token = tokenCookie.value;
+  store.name = nameCookie.value ?? "";
+  store.email = emailCookie.value ?? "";
+
+  useRouter().push("/");
 };
 </script>
 
