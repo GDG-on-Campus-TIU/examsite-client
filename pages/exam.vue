@@ -1,18 +1,8 @@
 <script lang="ts" setup>
 import { ref } from "vue";
 
-export type QuestionType = {
-  question: string;
-  choices: Array<{ index: number; choice: string }>;
-  rightChoice: { index: number; choice: string };
-  examId: string;
-  _id: string;
-};
-
-// Fetching the questions data
-const { questions } = await $fetch<{ questions: QuestionType[] }>(
-  "http://localhost:8998/api/v1/questions/get-all/6755cc46cf6a991bf8204af9?a_email=aritra@gdgoctiu.com&a_pass=RJiQ$jwzeOQrR$z9"
-);
+const questions = await $fetch("/api/questions");
+const router = useRouter();
 
 // Array to store selected choices for each question
 const selectedChoices = ref<{ questionId: string; choiceIndex: number }[]>([]);
@@ -35,6 +25,24 @@ const handleChoiceChange = (questionId: string, choiceIndex: number) => {
     });
   }
 };
+
+onMounted(async () => {
+  document.addEventListener("visibilitychange", async () => {
+    if (document.visibilityState === "hidden") {
+      const token = useCookie("token").value;
+
+      await $fetch("/api/questions/submit", {
+        method: "POST",
+        body: selectedChoices.value,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      router.push("/");
+    }
+  });
+});
 </script>
 
 <template>
@@ -43,7 +51,9 @@ const handleChoiceChange = (questionId: string, choiceIndex: number) => {
       <FormItem>
         <Card class="mb-4">
           <CardHeader>
-            <CardTitle class="text-2xl">{{ question.question }}</CardTitle>
+            <CardTitle class="text-2xl">{{
+              `${index + 1}. ${question.question}`
+            }}</CardTitle>
           </CardHeader>
           <CardContent>
             <!-- RadioGroup for choices of each question -->
@@ -58,9 +68,9 @@ const handleChoiceChange = (questionId: string, choiceIndex: number) => {
                   :value="choice.index.toString()"
                   @click="handleChoiceChange(question._id, choice.index)"
                 />
-                <Label :for="choice.index.toString()">{{
-                  choice.choice
-                }}</Label>
+                <Label>
+                  {{ choice.choice }}
+                </Label>
               </div>
             </RadioGroup>
           </CardContent>

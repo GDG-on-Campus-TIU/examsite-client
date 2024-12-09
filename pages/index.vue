@@ -26,14 +26,21 @@
     <div class="w-full">
       <Card>
         <CardHeader>
-          <CardTitle class="text-2xl">Upcoming Exams</CardTitle>
-          <CardDescription> Exams you can attempt. </CardDescription>
+          <CardTitle class="text-2xl">SOF GenAI Exam - 1</CardTitle>
+          <CardDescription> Full Marks: 20 </CardDescription>
         </CardHeader>
 
         <CardContent>
-          <ul class="list-disc pl-5 text-muted-foreground">
-            <li>SOF GenAI Exam - 1</li>
-          </ul>
+          <p>Test your knowledge and skills in this internal examination</p>
+
+          <Card class="mt-5 bg-red-500">
+            <CardHeader class="flex flex-row end-1">
+              <p>
+                <Icon name="mdi:information" class="mr-2 w-5 h-5" />
+              </p>
+              Note that switching tabs would automatically submit the exam
+            </CardHeader>
+          </Card>
         </CardContent>
 
         <CardFooter class="flex justify-end">
