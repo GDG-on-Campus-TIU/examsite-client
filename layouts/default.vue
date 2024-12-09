@@ -87,9 +87,9 @@ const links = [
       </div>
 
       <div class="pr-2 md:pr-7 flex items-center" v-if="user.token">
-        <span class="kanit font-bold mr-2 md:block hidden"
-          >, {{ user?.name }}</span
-        >
+        <span class="kanit font-bold mr-2 md:block hidden">
+          {{ user?.name }}
+        </span>
 
         <DropdownMenu v-if="user.token">
           <DropdownMenuTrigger as-child>
@@ -98,7 +98,9 @@ const links = [
                 <AvatarFallback>
                   {{
                     user.name.charAt(0)! +
-                    user?.name.charAt(user.name.length - 1)!
+                    user?.name
+                      .split(" ")
+                      [user.name.split(" ").length - 1].charAt(0)!
                   }}
                 </AvatarFallback>
               </Avatar>
