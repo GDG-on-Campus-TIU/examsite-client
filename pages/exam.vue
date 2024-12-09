@@ -4,12 +4,14 @@ import { ref } from "vue";
 const questions = await $fetch("/api/questions");
 const router = useRouter();
 
-// Array to store selected choices for each question
+const tabSwitchAttempts = ref(0);
+const windowSwitchAttempts = ref(0);
+
+const switchDetector = ref(false);
+
 const selectedChoices = ref<{ questionId: string; choiceIndex: number }[]>([]);
 
-// Function to handle the change when a radio button is clicked
 const handleChoiceChange = (questionId: string, choiceIndex: number) => {
-  // Check if the question already has a selection
   const existingChoice = selectedChoices.value.find(
     (item) => item.questionId === questionId
   );
@@ -26,26 +28,59 @@ const handleChoiceChange = (questionId: string, choiceIndex: number) => {
   }
 };
 
+const submitExam = async () => {
+  const token = useCookie("token").value;
+
+  await $fetch("/api/questions/submit", {
+    method: "POST",
+    body: selectedChoices.value,
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  router.push("/");
+};
+
+watch(tabSwitchAttempts, () => {
+  if (tabSwitchAttempts.value >= 2) {
+    submitExam();
+  }
+});
+
+watch(windowSwitchAttempts, () => {
+  if (windowSwitchAttempts.value >= 2) {
+    submitExam();
+  }
+});
+
 onMounted(async () => {
   document.addEventListener("visibilitychange", async () => {
     if (document.visibilityState === "hidden") {
-      const token = useCookie("token").value;
-
-      await $fetch("/api/questions/submit", {
-        method: "POST",
-        body: selectedChoices.value,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
-
-      router.push("/");
+      tabSwitchAttempts.value++;
+      switchDetector.value = true;
     }
+  });
+
+  window.addEventListener("blur", async () => {
+    windowSwitchAttempts.value++;
+    switchDetector.value = true;
   });
 });
 </script>
 
 <template>
+  {{ tabSwitchAttempts }}
+  {{ windowSwitchAttempts }}
+  <Card v-if="switchDetector" class="mt-5 bg-red-500">
+    <CardHeader class="flex flex-row end-1">
+      <p>
+        <Icon name="mdi:information" class="mr-2 w-5 h-5" />
+      </p>
+      Window / tab switch detected. Doing it once again would submit the exam.
+    </CardHeader>
+  </Card>
+
   <Form>
     <div v-for="(question, index) in questions" :key="question.examId">
       <FormItem>
@@ -79,6 +114,6 @@ onMounted(async () => {
     </div>
 
     <!-- Submit Button -->
-    <Button> Submit Answers </Button>
+    <Button @click="submitExam()"> Submit Answers </Button>
   </Form>
 </template>
