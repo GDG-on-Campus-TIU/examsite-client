@@ -3,30 +3,19 @@ type Body = {
   password: string;
 };
 
-type UserDetails = {
-  user: {
-    email: string;
-    name: string;
-    password: string;
-  };
-};
-
 type Loginuser = {
-  userDetails: {
-    _id: string;
-    name: string;
-    email: string;
-  };
+  userDetails: AttendeeType;
   token: string;
 };
 
-export type AttendeeType = {
+type AttendeeType = {
   name: string;
   email: string;
   password: string;
   attempts: number;
   dept: string;
   section: string;
+  _id: string;
 };
 
 export default defineEventHandler(async (event) => {
@@ -51,6 +40,7 @@ export default defineEventHandler(async (event) => {
       name: login.userDetails.name,
       email: login.userDetails.email,
       uid: login.userDetails._id,
+      attempts: login.userDetails.attempts,
     };
   } catch (error) {
     setResponseStatus(event, 400, "Bad Request");

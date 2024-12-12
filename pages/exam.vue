@@ -28,10 +28,10 @@ const handleChoiceChange = (questionId: string, choiceIndex: number) => {
   }
 };
 
-const submitExam = async () => {
+const decreaseAttempts = async () => {
   const token = useCookie("token").value;
 
-  await $fetch("/api/questions/submit", {
+  await $fetch("/api/questions/decrease-attempt", {
     method: "POST",
     body: selectedChoices.value,
     headers: {
@@ -44,13 +44,13 @@ const submitExam = async () => {
 
 watch(tabSwitchAttempts, () => {
   if (tabSwitchAttempts.value >= 2) {
-    submitExam();
+    decreaseAttempts();
   }
 });
 
 watch(windowSwitchAttempts, () => {
   if (windowSwitchAttempts.value >= 2) {
-    submitExam();
+    decreaseAttempts();
   }
 });
 
@@ -114,6 +114,6 @@ onMounted(async () => {
     </div>
 
     <!-- Submit Button -->
-    <Button @click="submitExam()"> Submit Answers </Button>
+    <Button @click="decreaseAttempts()"> Submit Answers </Button>
   </Form>
 </template>

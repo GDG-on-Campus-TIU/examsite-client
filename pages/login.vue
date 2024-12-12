@@ -78,11 +78,11 @@ const login = async () => {
   nameCookie.value = register.name;
   emailCookie.value = register.email;
 
-  console.log(register);
-
   store.token = tokenCookie.value;
   store.name = nameCookie.value ?? "";
   store.email = emailCookie.value ?? "";
+
+  store.attempts = register.attempts;
 
   useRouter().push("/");
 };

@@ -19,6 +19,23 @@ const links = [
     iconActive: "heroicons:academic-cap-solid",
   },
 ];
+
+// onMounted(() => {
+//   document.addEventListener("keydown", (event) => {
+//     if (
+//       (event.ctrlKey && event.key === "a") ||
+//       (event.ctrlKey && event.key === "u") ||
+//       event.key === "F12"
+//     ) {
+//       event.preventDefault();
+//     }
+//   });
+
+//   // Disable right-click context menu
+//   document.addEventListener("contextmenu", (event) => {
+//     event.preventDefault();
+//   });
+// });
 </script>
 
 <template>

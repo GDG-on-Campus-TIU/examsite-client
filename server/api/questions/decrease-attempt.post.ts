@@ -6,12 +6,9 @@ export default defineEventHandler(async (event) => {
 
   try {
     const submitExam = await $fetch(
-      "http://localhost:8998/api/v1/exam/submit-exam/6755cc46cf6a991bf8204af9",
+      "http://localhost:8998/api/v1/users/decrease-attempts",
       {
         method: "POST",
-        body: {
-          response: body,
-        },
         headers: {
           Authorization: token!,
         },

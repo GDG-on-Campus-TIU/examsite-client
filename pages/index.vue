@@ -1,3 +1,7 @@
+<script setup lang="ts">
+import { userStore } from "~/store/user";
+</script>
+
 <template>
   <div class="flex flex-col items-center justify-center h-full space-y-8">
     <!-- Attempted Exams Section -->
@@ -45,7 +49,7 @@
 
         <CardFooter class="flex justify-end">
           <!-- Button -->
-          <Button variant="link" @click="attemptQuiz">
+          <Button variant="link" :disabled="userStore().attempts == 0">
             <nuxt-link to="/exam">Attempt Quiz</nuxt-link>
             <Icon name="mdi:arrow-right" />
           </Button>
@@ -54,9 +58,3 @@
     </div>
   </div>
 </template>
-
-<script setup lang="ts">
-const attemptQuiz = () => {
-  console.log("Attempt Quiz button clicked");
-};
-</script>
