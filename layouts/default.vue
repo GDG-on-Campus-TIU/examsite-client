@@ -17,6 +17,7 @@ const logout = () => {
   useRouter().push("/login");
 };
 
+// ATTENTION: WHEN IN DEVELOPMENT, COMMENT THIS CODE OUT
 onMounted(() => {
   document.addEventListener("keydown", (event) => {
     if (
