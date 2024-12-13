@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { userStore } from "~/store/user";
+const user = userStore();
 </script>
 
 <template>
@@ -27,6 +28,7 @@ import { userStore } from "~/store/user";
     </div> -->
 
     <!-- Upcoming Exams Section -->
+
     <div class="w-full">
       <Card>
         <CardHeader>
@@ -49,7 +51,7 @@ import { userStore } from "~/store/user";
 
         <CardFooter class="flex justify-end">
           <!-- Button -->
-          <Button variant="link" :disabled="userStore().attempts == 0">
+          <Button variant="link" :disabled="user.attempts == 0">
             <nuxt-link to="/exam">Attempt Quiz</nuxt-link>
             <Icon name="mdi:arrow-right" />
           </Button>

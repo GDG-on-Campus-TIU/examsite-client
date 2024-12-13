@@ -1,8 +1,9 @@
 <script lang="ts" setup>
-import { ref } from "vue";
+import { userStore } from "~/store/user";
 
 const questions = await $fetch("/api/questions");
 const router = useRouter();
+const user = userStore();
 
 const tabSwitchAttempts = ref(0);
 const windowSwitchAttempts = ref(0);
@@ -29,6 +30,10 @@ const handleChoiceChange = (questionId: string, choiceIndex: number) => {
 };
 
 const decreaseAttempts = async () => {
+  if (!questions) {
+    return;
+  }
+
   const token = useCookie("token").value;
 
   await $fetch("/api/questions/decrease-attempt", {
@@ -39,16 +44,25 @@ const decreaseAttempts = async () => {
     },
   });
 
+  user.attempts = user.attempts - 1;
+
   router.push("/");
 };
 
 watch(tabSwitchAttempts, () => {
+  if (!questions) {
+    return;
+  }
   if (tabSwitchAttempts.value >= 2) {
     decreaseAttempts();
   }
 });
 
 watch(windowSwitchAttempts, () => {
+  if (!questions) {
+    return;
+  }
+
   if (windowSwitchAttempts.value >= 2) {
     decreaseAttempts();
   }
@@ -56,6 +70,10 @@ watch(windowSwitchAttempts, () => {
 
 onMounted(async () => {
   document.addEventListener("visibilitychange", async () => {
+    if (!questions) {
+      return;
+    }
+
     if (document.visibilityState === "hidden") {
       tabSwitchAttempts.value++;
       switchDetector.value = true;
@@ -63,6 +81,10 @@ onMounted(async () => {
   });
 
   window.addEventListener("blur", async () => {
+    if (!questions) {
+      return;
+    }
+
     windowSwitchAttempts.value++;
     switchDetector.value = true;
   });
@@ -70,8 +92,6 @@ onMounted(async () => {
 </script>
 
 <template>
-  {{ tabSwitchAttempts }}
-  {{ windowSwitchAttempts }}
   <Card v-if="switchDetector" class="mt-5 bg-red-500">
     <CardHeader class="flex flex-row end-1">
       <p>
@@ -81,7 +101,7 @@ onMounted(async () => {
     </CardHeader>
   </Card>
 
-  <Form>
+  <Form v-if="questions !== null">
     <div v-for="(question, index) in questions" :key="question.examId">
       <FormItem>
         <Card class="mb-4">
@@ -113,7 +133,24 @@ onMounted(async () => {
       </FormItem>
     </div>
 
+    <Card v-if="!questions">
+      <CardHeader>
+        <CardTitle>Exam hasn't started yet</CardTitle>
+      </CardHeader>
+
+      <CardFooter>
+        <nuxt-link to="/">
+          <Button variant="link">
+            <Icon name="mdi:arrow-left" />
+            Go Back
+          </Button>
+        </nuxt-link>
+      </CardFooter>
+    </Card>
+
     <!-- Submit Button -->
-    <Button @click="decreaseAttempts()"> Submit Answers </Button>
+    <Button v-if="questions" @click="decreaseAttempts()">
+      Submit Answers
+    </Button>
   </Form>
 </template>

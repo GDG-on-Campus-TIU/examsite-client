@@ -22,5 +22,12 @@ export const userStore = defineStore("user", {
       this.email = userInfo.email;
       this.attempts = this.attempts;
     },
+
+    logout() {
+      this.token = "";
+      this.name = "";
+      this.email = "";
+      this.attempts = 0;
+    },
   },
 });

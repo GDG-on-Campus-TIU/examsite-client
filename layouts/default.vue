@@ -20,6 +20,15 @@ const links = [
   },
 ];
 
+const logout = () => {
+  useCookie("token").value = "";
+  useCookie("name").value = "";
+  useCookie("email").value = "";
+
+  user.logout();
+  useRouter().push("/login");
+};
+
 // onMounted(() => {
 //   document.addEventListener("keydown", (event) => {
 //     if (
@@ -134,29 +143,10 @@ const links = [
                 </p>
               </div>
             </DropdownMenuLabel>
-            <DropdownMenuSeparator />
-            <DropdownMenuGroup>
-              <DropdownMenuItem>
-                Profile
-                <DropdownMenuShortcut>⇧⌘P</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                Billing
-                <DropdownMenuShortcut>⌘B</DropdownMenuShortcut>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                Settings
-                <DropdownMenuShortcut>⌘S</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </DropdownMenuGroup>
+
             <DropdownMenuSeparator />
 
-            <NuxtLink to="/api/logout" external>
-              <DropdownMenuItem>
-                Log out
-                <DropdownMenuShortcut>⇧⌘Q</DropdownMenuShortcut>
-              </DropdownMenuItem>
-            </NuxtLink>
+            <DropdownMenuItem @click="logout()"> Log out </DropdownMenuItem>
           </DropdownMenuContent>
         </DropdownMenu>
       </div>
