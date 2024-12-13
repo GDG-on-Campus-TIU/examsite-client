@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { userStore } from "./store/user";
-
 const tokenCookie = useCookie("token");
 const nameCookie = useCookie("name");
 const emailCookie = useCookie("email");

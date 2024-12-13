@@ -1,3 +1,5 @@
+import { API_URL } from "~/data";
+
 type Loginuser = {
   user: AttendeeType;
   token: string;
@@ -17,14 +19,11 @@ export default defineEventHandler(async (event) => {
   const header = getHeader(event, "Authorization");
 
   try {
-    const login = await $fetch<Loginuser>(
-      "http://localhost:8998/api/v1/users/me",
-      {
-        headers: {
-          Authorization: header!,
-        },
-      }
-    );
+    const login = await $fetch<Loginuser>(`${API_URL}/api/v1/users/me`, {
+      headers: {
+        Authorization: header!,
+      },
+    });
 
     return {
       name: login.user.name,

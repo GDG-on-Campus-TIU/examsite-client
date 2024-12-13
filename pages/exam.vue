@@ -1,6 +1,4 @@
 <script lang="ts" setup>
-import { userStore } from "~/store/user";
-
 const questions = await $fetch("/api/questions");
 const router = useRouter();
 const user = userStore();

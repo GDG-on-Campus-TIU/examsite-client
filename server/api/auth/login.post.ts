@@ -1,3 +1,5 @@
+import { API_URL } from "~/data";
+
 type Body = {
   email: string;
   password: string;
@@ -22,16 +24,13 @@ export default defineEventHandler(async (event) => {
   const body = await readBody<Body>(event);
 
   try {
-    const login = await $fetch<Loginuser>(
-      "http://localhost:8998/api/v1/users/login",
-      {
-        method: "POST",
-        body: {
-          email: body.email,
-          password: body.password,
-        },
-      }
-    );
+    const login = await $fetch<Loginuser>(`${API_URL}/api/v1/users/login`, {
+      method: "POST",
+      body: {
+        email: body.email,
+        password: body.password,
+      },
+    });
 
     return {
       token: login.token,

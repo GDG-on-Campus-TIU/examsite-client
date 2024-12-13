@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { userStore } from "~/store/user";
 const user = userStore();
 </script>
 
