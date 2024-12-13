@@ -12,12 +12,6 @@ const links = [
     icon: "heroicons:home",
     iconActive: "heroicons:home-solid",
   },
-  {
-    name: "About",
-    to: "/about",
-    icon: "heroicons:academic-cap",
-    iconActive: "heroicons:academic-cap-solid",
-  },
 ];
 
 const logout = () => {
@@ -157,7 +151,7 @@ const logout = () => {
 <style lang="scss">
 .link_active {
   button {
-    @apply bg-border text-white;
+    @apply bg-border;
   }
 
   span {

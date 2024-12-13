@@ -29,8 +29,6 @@ const user = userStore();
 
     <!-- Upcoming Exams Section -->
 
-    {{ user.attempts }}
-
     <div class="w-full">
       <Card>
         <CardHeader>
