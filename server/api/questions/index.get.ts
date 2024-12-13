@@ -1,4 +1,4 @@
-import { API_URL } from "~/data";
+import { API_URL } from "~/data/api_url";
 
 export type QuestionType = {
   question: string;

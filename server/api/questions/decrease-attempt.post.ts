@@ -1,4 +1,4 @@
-import { API_URL } from "~/data";
+import { API_URL } from "~/data/api_url";
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
