@@ -24,15 +24,19 @@ if (tokenCookie.value) {
       },
     });
 
-    attempts.value = me.attempts.toString();
+    try {
+      attempts.value = me.attempts.toString() ?? "";
+    } catch (error) {
+      //
+    }
 
     user.setUserData({
       token: tokenCookie.value,
       name: nameCookie.value || "",
       email: emailCookie.value || "",
-      attempts: me.attempts,
+      attempts: parseInt(attempts.value!),
     });
-  } catch (error) {
+  } catch (error: any) {
     noCookie();
   }
 }
