@@ -51,10 +51,25 @@ const user = userStore();
 
         <CardFooter class="flex justify-end">
           <!-- Button -->
-          <Button variant="link" :disabled="user.attempts == 0">
+          <Button variant="link" v-if="user?.attempts > 0">
             <nuxt-link to="/exam">Attempt Quiz</nuxt-link>
             <Icon name="mdi:arrow-right" />
           </Button>
+
+          <HoverCard>
+            <HoverCardTrigger>
+              <Button v-if="user?.attempts === 0" variant="link">
+                No Attempts Left
+                <p>
+                  <Icon name="mdi:error" />
+                </p>
+              </Button>
+            </HoverCardTrigger>
+            <HoverCardContent>
+              Seems like you have exhausted all of your exam attempts. Please
+              contact admin if you think this is a mistake.
+            </HoverCardContent>
+          </HoverCard>
         </CardFooter>
       </Card>
     </div>

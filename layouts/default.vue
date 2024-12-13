@@ -21,10 +21,6 @@ const links = [
 ];
 
 const logout = () => {
-  useCookie("token").value = "";
-  useCookie("name").value = "";
-  useCookie("email").value = "";
-
   user.logout();
   useRouter().push("/login");
 };

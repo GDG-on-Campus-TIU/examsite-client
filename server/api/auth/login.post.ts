@@ -21,8 +21,6 @@ type AttendeeType = {
 export default defineEventHandler(async (event) => {
   const body = await readBody<Body>(event);
 
-  console.log(body);
-
   try {
     const login = await $fetch<Loginuser>(
       "http://localhost:8998/api/v1/users/login",

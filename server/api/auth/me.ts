@@ -27,15 +27,12 @@ export default defineEventHandler(async (event) => {
     );
 
     return {
-      token: login.token,
       name: login.user.name,
       email: login.user.email,
       uid: login.user._id,
       attempts: login.user.attempts,
     };
   } catch (error) {
-    console.log(error);
-
     setResponseStatus(event, 400, "Bad Request");
     return "error";
   }

@@ -61,7 +61,7 @@ const login = async () => {
   form.value.email.trim();
   form.value.password.trim();
 
-  let login = await $fetch("/api/auth/login  ", {
+  let login = await $fetch("/api/auth/login", {
     method: "POST",
 
     body: {
@@ -73,14 +73,10 @@ const login = async () => {
   const tokenCookie = useCookie("token");
   const nameCookie = useCookie("name");
   const emailCookie = useCookie("email");
-  const idCookie = useCookie("uid");
 
   tokenCookie.value = login.token;
   nameCookie.value = login.name;
   emailCookie.value = login.email;
-  idCookie.value = login.uid;
-
-  console.log(login);
 
   store.token = tokenCookie.value;
   store.name = nameCookie.value ?? "";
@@ -91,7 +87,3 @@ const login = async () => {
   useRouter().push("/");
 };
 </script>
-
-<style scoped>
-/* Custom styles can go here if needed */
-</style>
