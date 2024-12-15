@@ -5,11 +5,19 @@ useHead({
   title: "Techno India University - Exam Portal",
 });
 
-const { exams } = await $fetch<{ exams: ExamType[] }>("/api/exam/get-all", {
-  headers: {
-    Authorization: `Bearer ${useCookie("token").value}`,
-  },
-});
+const exams = ref<ExamType[]>([]);
+
+try {
+  const allExams = await $fetch<{ exams: ExamType[] }>("/api/exam/get-all", {
+    headers: {
+      Authorization: `Bearer ${useCookie("token").value}`,
+    },
+  });
+
+  exams.value = allExams.exams;
+} catch (error) {
+  useRouter().push("/login");
+}
 </script>
 
 <template>

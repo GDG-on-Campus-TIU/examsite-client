@@ -96,6 +96,10 @@ const logout = () => {
         </Sheet>
       </div>
 
+      <div class="flex items-center justify-center">
+        <img src="../assets/images/gdg.png" alt="GDG Logo" class="w-56" />
+      </div>
+
       <div class="pr-2 md:pr-7 flex items-center" v-if="user.token">
         <span class="kanit font-bold mr-2 md:block hidden">
           {{ user?.name }}
