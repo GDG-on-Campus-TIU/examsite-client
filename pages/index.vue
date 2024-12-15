@@ -1,5 +1,9 @@
 <script setup lang="ts">
 const user = userStore();
+
+useHead({
+  title: "Techno India University - Exam Portal",
+});
 </script>
 
 <template>

@@ -24,7 +24,7 @@ export default defineEventHandler(async (event) => {
   const body = await readBody<Body>(event);
 
   try {
-    const login = await $fetch<Loginuser>(`${API_URL}/api/v1/users/login`, {
+    const login = await $fetch<Loginuser>(`${API_URL}/users/login`, {
       method: "POST",
       body: {
         email: body.email,

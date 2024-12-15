@@ -11,7 +11,7 @@ export type QuestionType = {
 export default defineEventHandler(async (event) => {
   try {
     const { questions } = await $fetch<{ questions: QuestionType[] }>(
-      `${API_URL}/api/v1/questions/get-all/6755cc46cf6a991bf8204af9?a_email=aritra@gdgoctiu.com&a_pass=RJiQ$jwzeOQrR$z9`
+      `${API_URL}/questions/get-all/675ca1c674e4a281e24faa3f?a_email=aritra@gdgoctiu.com&a_pass=RJiQ$jwzeOQrR$z9`
     );
 
     return questions;

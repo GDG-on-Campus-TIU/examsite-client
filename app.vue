@@ -1,4 +1,6 @@
 <script lang="ts" setup>
+import Toaster from "@/components/ui/toast/Toaster.vue";
+
 const tokenCookie = useCookie("token");
 const nameCookie = useCookie("name");
 const emailCookie = useCookie("email");
@@ -45,7 +47,8 @@ if (!tokenCookie.value) {
 </script>
 
 <template>
+  <Toaster />
   <nuxt-layout>
-    <nuxt-page></nuxt-page>
+    <nuxt-page> </nuxt-page>
   </nuxt-layout>
 </template>

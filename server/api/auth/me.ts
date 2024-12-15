@@ -19,7 +19,7 @@ export default defineEventHandler(async (event) => {
   const header = getHeader(event, "Authorization");
 
   try {
-    const login = await $fetch<Loginuser>(`${API_URL}/api/v1/users/me`, {
+    const login = await $fetch<Loginuser>(`${API_URL}/users/me`, {
       headers: {
         Authorization: header!,
       },

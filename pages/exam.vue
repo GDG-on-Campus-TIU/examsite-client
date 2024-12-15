@@ -1,7 +1,10 @@
 <script lang="ts" setup>
+import { useToast } from "@/components/ui/toast/use-toast";
+
 const questions = await $fetch("/api/questions");
 const router = useRouter();
 const user = userStore();
+const { toast } = useToast();
 
 const tabSwitchAttempts = ref(0);
 const windowSwitchAttempts = ref(0);
@@ -36,13 +39,42 @@ const decreaseAttempts = async () => {
 
   await $fetch("/api/questions/decrease-attempt", {
     method: "POST",
-    body: selectedChoices.value,
     headers: {
       Authorization: `Bearer ${token}`,
     },
   });
 
   user.attempts = user.attempts - 1;
+
+  if (user.attempts < 1) {
+    router.push("/");
+  }
+};
+
+const submitExam = async () => {
+  const token = useCookie("token").value;
+
+  await $fetch("/api/questions/decrease-attempt", {
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+  user.attempts = user.attempts - 1;
+
+  await $fetch("/api/questions/submit-exam", {
+    body: selectedChoices.value,
+    method: "POST",
+    headers: {
+      Authorization: `Bearer ${useCookie("token").value}`,
+    },
+  });
+
+  toast({
+    title: "Exam successfully submitted!",
+    description: "Your exam has been submitted. You can now log out  ",
+  });
 
   router.push("/");
 };
@@ -86,6 +118,11 @@ onMounted(async () => {
     windowSwitchAttempts.value++;
     switchDetector.value = true;
   });
+});
+
+// Page Head
+useHead({
+  title: "SOF GenAI Exam - 1",
 });
 </script>
 
@@ -147,7 +184,7 @@ onMounted(async () => {
     </Card>
 
     <!-- Submit Button -->
-    <Button v-if="questions" @click="decreaseAttempts()">
+    <Button v-if="questions" @click.prevent="submitExam()">
       Submit Answers
     </Button>
   </Form>

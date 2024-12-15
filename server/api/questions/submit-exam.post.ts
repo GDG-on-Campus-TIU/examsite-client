@@ -5,13 +5,18 @@ export default defineEventHandler(async (event) => {
   const token = getHeader(event, "Authorization");
 
   try {
-    const submitExam = await $fetch(`${API_URL}/users/decrease-attempts`, {
+    await $fetch(`${API_URL}/exam/submit-exam/675ca1c674e4a281e24faa3f`, {
+      body: {
+        response: body,
+      },
       method: "POST",
       headers: {
         Authorization: token!,
       },
     });
+    return "ok";
   } catch (error) {
-    console.log(error);
+    setResponseStatus(event, 500);
+    return "something went wrong";
   }
 });
