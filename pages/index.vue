@@ -4,6 +4,12 @@ const user = userStore();
 useHead({
   title: "Techno India University - Exam Portal",
 });
+
+const { exams } = await $fetch<{ exams: ExamType[] }>("/api/exam/get-all", {
+  headers: {
+    Authorization: `Bearer ${useCookie("token").value}`,
+  },
+});
 </script>
 
 <template>
@@ -33,10 +39,10 @@ useHead({
     <!-- Upcoming Exams Section -->
 
     <div class="w-full">
-      <Card>
+      <Card v-for="exam in exams">
         <CardHeader>
-          <CardTitle class="text-2xl">SOF GenAI Exam - 1</CardTitle>
-          <CardDescription> Full Marks: 20 </CardDescription>
+          <CardTitle class="text-2xl">{{ exam.name }}</CardTitle>
+          <CardDescription> Full Marks: {{ exam.totalMarks }} </CardDescription>
         </CardHeader>
 
         <CardContent>

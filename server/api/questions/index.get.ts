@@ -1,12 +1,5 @@
 import { API_URL } from "~/data/api_url";
-
-export type QuestionType = {
-  question: string;
-  choices: Array<{ index: number; choice: string }>;
-  rightChoice: { index: number; choice: string };
-  examId: string;
-  _id: string;
-};
+import { QuestionType } from "~/types";
 
 export default defineEventHandler(async (event) => {
   try {

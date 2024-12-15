@@ -18,28 +18,28 @@ const logout = () => {
 };
 
 // ATTENTION: WHEN IN DEVELOPMENT, COMMENT THIS CODE OUT
-onMounted(() => {
-  document.addEventListener("keydown", (event) => {
-    if (
-      (event.ctrlKey && event.key === "a") ||
-      (event.ctrlKey && event.key === "u") ||
-      event.key === "F12"
-    ) {
-      event.preventDefault();
-    }
-  });
+// onMounted(() => {
+//   document.addEventListener("keydown", (event) => {
+//     if (
+//       (event.ctrlKey && event.key === "a") ||
+//       (event.ctrlKey && event.key === "u") ||
+//       event.key === "F12"
+//     ) {
+//       event.preventDefault();
+//     }
+//   });
 
-  // Disable right-click context menu
-  document.addEventListener("contextmenu", (event) => {
-    event.preventDefault();
-  });
+//   // Disable right-click context menu
+//   document.addEventListener("contextmenu", (event) => {
+//     event.preventDefault();
+//   });
 
-  let mediaDevices = navigator.mediaDevices;
-  mediaDevices.getUserMedia({
-    video: true,
-    audio: true,
-  });
-});
+//   let mediaDevices = navigator.mediaDevices;
+//   mediaDevices.getUserMedia({
+//     video: true,
+//     audio: true,
+//   });
+// });
 </script>
 
 <template>
