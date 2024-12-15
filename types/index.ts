@@ -1,4 +1,5 @@
 export type ExamType = {
+  _id: string;
   name: string;
   slug: string;
   dept: string;

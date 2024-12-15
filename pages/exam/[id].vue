@@ -1,10 +1,15 @@
 <script lang="ts" setup>
 import { useToast } from "@/components/ui/toast/use-toast";
-
-const questions = await $fetch("/api/questions");
-const router = useRouter();
-const user = userStore();
+import type { QuestionType } from "~/types";
 const { toast } = useToast();
+
+const router = useRouter();
+const route = useRoute();
+
+const { questions } = await $fetch<{ questions: QuestionType[] }>(
+  `/api/questions/${route.params.id}`
+);
+const user = userStore();
 
 const tabSwitchAttempts = ref(0);
 const windowSwitchAttempts = ref(0);
@@ -178,7 +183,7 @@ useHead({
 
     <Card v-if="!questions">
       <CardHeader>
-        <CardTitle>Exam hasn't started yet</CardTitle>
+        <CardTitle>No questions found in this exam</CardTitle>
       </CardHeader>
 
       <CardFooter>

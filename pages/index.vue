@@ -60,8 +60,12 @@ const { exams } = await $fetch<{ exams: ExamType[] }>("/api/exam/get-all", {
 
         <CardFooter class="flex justify-end">
           <!-- Button -->
-          <Button variant="link" v-if="user?.attempts > 0">
-            <nuxt-link to="/exam">Attempt Quiz</nuxt-link>
+          <Button
+            variant="link"
+            v-if="user?.attempts > 0"
+            :disabled="exam.started === 'NO'"
+          >
+            <nuxt-link :to="`/exam/${exam._id}`">Attempt Quiz</nuxt-link>
             <Icon name="mdi:arrow-right" />
           </Button>
 
