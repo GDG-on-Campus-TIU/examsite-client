@@ -50,13 +50,7 @@ const logout = () => {
           <SheetContent side="left">
             <SheetHeader>
               <SheetTitle class="font-bold md:text-xl text-left flex items-end">
-                <img
-                  src="../assets/images/logo.svg"
-                  class="h-9 md:w-16 md:h-16"
-                  alt=""
-                />
-
-                Techno India University
+                <img src="../assets/images/logo.PNG" class="w-44" alt="" />
               </SheetTitle>
             </SheetHeader>
 
@@ -95,12 +89,7 @@ const logout = () => {
               <h1
                 class="text-2xl font-bold font-montserrat ml-2 flex items-end"
               >
-                <img
-                  src="../assets/images/logo.svg"
-                  class="h-9 md:w-12 md:h-12"
-                  alt="Logo"
-                />
-                Techno India University
+                <img src="../assets/images/logo.PNG" alt="Logo" class="w-44" />
               </h1>
             </nuxt-link>
           </div>
