@@ -63,20 +63,28 @@ const submitExam = async () => {
 
   user.attempts = user.attempts - 1;
 
-  await $fetch("/api/questions/submit-exam", {
-    body: selectedChoices.value,
-    method: "POST",
-    headers: {
-      Authorization: `Bearer ${useCookie("token").value}`,
-    },
-  });
+  try {
+    await $fetch("/api/questions/submit-exam", {
+      body: selectedChoices.value,
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${useCookie("token").value}`,
+      },
+    });
 
-  toast({
-    title: "Exam successfully submitted!",
-    description: "Your exam has been submitted. You can now log out  ",
-  });
+    toast({
+      title: "Exam successfully submitted!",
+      description: "Your exam has been submitted. You can now log out  ",
+    });
 
-  router.push("/");
+    router.push("/");
+  } catch (error) {
+    toast({
+      title: "Seems like you have already submitted your exam",
+      description: "Please go to the admin if you think this is a mistake",
+      variant: "destructive",
+    });
+  }
 };
 
 watch(tabSwitchAttempts, () => {
