@@ -39,7 +39,16 @@ const { exams } = await $fetch<{ exams: ExamType[] }>("/api/exam/get-all", {
     <!-- Upcoming Exams Section -->
 
     <div class="w-full">
-      <Card v-for="exam in exams">
+      <Card class="my-5 bg-red-500">
+        <CardHeader class="flex flex-row end-1">
+          <p>
+            <Icon name="mdi:information" class="mr-2 w-5 h-5" />
+          </p>
+          Note that switching tabs would automatically submit the exam
+        </CardHeader>
+      </Card>
+
+      <Card class="mt-4" v-for="exam in exams">
         <CardHeader>
           <CardTitle class="text-2xl">{{ exam.name }}</CardTitle>
           <CardDescription> Full Marks: {{ exam.totalMarks }} </CardDescription>
@@ -47,15 +56,6 @@ const { exams } = await $fetch<{ exams: ExamType[] }>("/api/exam/get-all", {
 
         <CardContent>
           <p>Test your knowledge and skills in this internal examination</p>
-
-          <Card class="mt-5 bg-red-500">
-            <CardHeader class="flex flex-row end-1">
-              <p>
-                <Icon name="mdi:information" class="mr-2 w-5 h-5" />
-              </p>
-              Note that switching tabs would automatically submit the exam
-            </CardHeader>
-          </Card>
         </CardContent>
 
         <CardFooter class="flex justify-end">
