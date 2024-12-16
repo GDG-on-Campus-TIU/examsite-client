@@ -18,28 +18,68 @@ const logout = () => {
 };
 
 // ATTENTION: WHEN IN DEVELOPMENT, COMMENT THIS CODE OUT
-// onMounted(() => {
-//   document.addEventListener("keydown", (event) => {
-//     if (
-//       (event.ctrlKey && event.key === "a") ||
-//       (event.ctrlKey && event.key === "u") ||
-//       event.key === "F12"
-//     ) {
-//       event.preventDefault();
-//     }
-//   });
+onMounted(() => {
+  const element = document.documentElement;
 
-//   // Disable right-click context menu
-//   document.addEventListener("contextmenu", (event) => {
-//     event.preventDefault();
-//   });
+  // Request fullscreen mode
+  function requestFullscreen() {
+    if (element.requestFullscreen) {
+      element.requestFullscreen();
+    } else if (element.requestFullscreen) {
+      // Safari
+      element.requestFullscreen();
+    } else if (element.requestFullscreen) {
+      // IE/Edge
+      element.requestFullscreen();
+    } else {
+      alert("Fullscreen mode is not supported in this browser.");
+    }
+  }
 
-//   let mediaDevices = navigator.mediaDevices;
-//   mediaDevices.getUserMedia({
-//     video: true,
-//     audio: true,
-//   });
-// });
+  // Detect fullscreen changes
+  function handleFullscreenChange() {
+    if (!document.fullscreenElement) {
+      // Fullscreen was exited
+      requestFullscreen();
+    }
+  }
+
+  // Automatically enter fullscreen mode
+  requestFullscreen();
+
+  // Monitor for fullscreen exit
+  document.addEventListener("fullscreenchange", handleFullscreenChange);
+
+  // Prevent certain key combinations
+  document.addEventListener("keydown", (event) => {
+    if (
+      (event.ctrlKey && event.key === "a") ||
+      (event.ctrlKey && event.key === "u") ||
+      event.key === "F12" ||
+      event.key === "Escape" // Prevent pressing Escape to exit fullscreen
+    ) {
+      event.preventDefault();
+    }
+  });
+
+  // Disable right-click context menu
+  document.addEventListener("contextmenu", (event) => {
+    event.preventDefault();
+  });
+
+  // Access user media
+  navigator.mediaDevices
+    .getUserMedia({
+      video: true,
+      audio: true,
+    })
+    .then((stream) => {
+      console.log("Media devices accessed successfully:", stream);
+    })
+    .catch((error) => {
+      console.error("Error accessing media devices:", error);
+    });
+});
 </script>
 
 <template>
