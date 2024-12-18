@@ -140,6 +140,13 @@ useHead({
 </script>
 
 <template>
+  <Card v-if="questions.length > 0">
+    <CardHeader>
+      You have
+      {{ `${user.attempts} attempt${user.attempts > 1 ? "s" : ""}` }} left
+    </CardHeader>
+  </Card>
+
   <Card v-if="switchDetector" class="mt-5 bg-red-500">
     <CardHeader class="flex flex-row end-1">
       <p>

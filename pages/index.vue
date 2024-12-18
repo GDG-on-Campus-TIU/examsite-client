@@ -59,7 +59,10 @@ try {
       <Card class="mt-4" v-for="exam in exams">
         <CardHeader>
           <CardTitle class="text-2xl">{{ exam.name }}</CardTitle>
-          <CardDescription> Full Marks: {{ exam.totalMarks }} </CardDescription>
+          <CardDescription>
+            <p>Full Marks: {{ exam.totalMarks }}</p>
+            <p>Marks Per Question: {{ exam.marksPerQuestion }}</p>
+          </CardDescription>
         </CardHeader>
 
         <CardContent>
